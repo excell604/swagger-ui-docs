@@ -1,0 +1,51 @@
+openapi: 3.0.0
+info:
+  title: OpenWeatherMap API
+  description: This API provides weather information for cities around the world.
+  version: 1.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/AEXCEL780/openweatherapi/1.0.0
+  - url: https://api.openweathermap.org/data/2.5
+    description: OpenWeatherMap API server
+paths:
+  /weather:
+    get:
+      summary: Get weather by city name
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: The name of the city
+          schema:
+            type: string
+            example: London
+        - name: appid
+          in: query
+          required: true
+          description: Your API key
+          schema:
+            type: string
+            example: 6cb2448603181bcb3ad20d85b05835b1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  main:
+                    type: object
+                    properties:
+                      temp:
+                        type: number
+                        description: Temperature in Kelvin
+                      humidity:
+                        type: integer
+                        description: Humidity percentage
+        '401':
+          description: Unauthorized. Invalid API key.
+        '404':
+          description: City not found
